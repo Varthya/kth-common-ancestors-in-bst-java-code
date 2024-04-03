@@ -1,0 +1,51 @@
+ ArrayList<Integer> fun(Node root,int d)
+          {
+              ArrayList<Integer>ansc=new ArrayList<Integer>();
+              while(root!=null)
+              {
+                  if(root.data>d)
+                  {  
+                      ansc.add(root.data);
+                      root=root.left;
+                  }
+                  else if(root.data<d)
+                  {
+                      ansc.add(root.data);
+                      root=root.right;
+                  }
+                  else
+                  {
+                      ansc.add(root.data);
+                      break;
+                  }
+              }
+              return ansc;
+          }
+    public int kthCommonAncestor(Node root, int k, int x, int y) {
+        // code here
+        ArrayList<Integer>ansc_x=new ArrayList<Integer>();
+        ArrayList<Integer>ansc_y=new ArrayList<Integer>();
+         ansc_x=fun(root,x);
+         ansc_y=fun(root,y);
+          HashMap<Integer,Integer>hp=new HashMap<Integer,Integer>();
+          for(int i=0;i<ansc_x.size();i++)
+          {  
+             if(hp.containsKey(ansc_x.get(i))==false) 
+             {
+                hp.put(ansc_x.get(i),1);
+             }
+             else
+             {
+                 hp.put(ansc_x.get(i),hp.get(ansc_x.get(i))+1);
+             }
+          }
+          int count=0;
+          for(int i=ansc_y.size()-1;i>=0;i--)
+          {
+              if(hp.containsKey(ansc_y.get(i))==true)
+              {
+                 count++;
+                 if(count==k)return ansc_y.get(i);
+              }
+          }
+          return -1;
